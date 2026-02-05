@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model CachedDeal {
+  id           String   @id @default(uuid())
+  dealId       Int      @unique
+  title        String
+  opportunity  Float
+  assignedById Int
+  stageId      String
+  companyTitle String?
+  lastUpdated  DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([assignedById])
+  @@index([stageId])
+}
