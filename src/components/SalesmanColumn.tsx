@@ -28,25 +28,29 @@ export default function SalesmanColumn({
 
     return (
         <div
-            className="flex-1 min-w-[260px] flex flex-col bg-[#1E1E1E] rounded-2xl overflow-hidden animate-fade-in"
+            className="flex flex-col bg-[#1E1E1E] rounded-2xl overflow-hidden animate-fade-in h-full"
             style={{ animationDelay: `${animationDelay}ms` }}
         >
             {/* Header do Vendedor */}
             <div className="p-4 bg-gradient-to-r from-[#1E1E1E] to-[#252525] border-b border-gray-800">
                 <div className="flex items-center gap-4 mb-4">
-                    {/* Photo - bigger icon with object-contain to avoid cropping */}
-                    <div className="w-16 h-16 rounded-full bg-[#A9F804]/10 flex items-center justify-center overflow-hidden flex-shrink-0 border-2 border-[#A9F804]/30">
+                    {/* Photo - cleaner look without borders, neutral bg for transparent pngs */}
+                    <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center overflow-hidden flex-shrink-0">
                         {photoUrl ? (
                             <Image
                                 src={photoUrl}
                                 alt={salesman.name}
                                 width={64}
                                 height={64}
-                                className="w-full h-full object-contain"
-                                style={{ objectPosition: "center top" }}
+                                className="w-full h-full object-contain transition-transform"
+                                style={{
+                                    objectPosition: "center top",
+                                    transform: salesman.id === 286 ? "scale(1.05) translateY(7px)" : "none",
+                                    transformOrigin: "top center"
+                                }}
                             />
                         ) : (
-                            <User className="w-8 h-8 text-[#A9F804]" />
+                            <User className="w-8 h-8 text-gray-400" />
                         )}
                     </div>
                     <div className="flex-1 min-w-0">

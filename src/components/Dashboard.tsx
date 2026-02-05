@@ -40,7 +40,7 @@ export default function Dashboard() {
     const dashboardData = data?.data as DashboardData;
 
     return (
-        <div className="flex flex-col h-screen w-screen overflow-hidden bg-[#121212]">
+        <div className="flex flex-col h-screen w-full overflow-hidden bg-[#121212]">
             {/* Header com Totais */}
             <TotalsHeader
                 funnelTotals={dashboardData.funnelTotals}
@@ -50,8 +50,8 @@ export default function Dashboard() {
                 fromCache={data?.fromCache || false}
             />
 
-            {/* Kanban por Vendedor - padding nas laterais e entre colunas */}
-            <div className="flex-1 flex overflow-hidden p-4 gap-3 scrollbar-hide">
+            {/* Kanban por Vendedor - Grid fixo de 5 colunas para caber na TV 100% */}
+            <div className="flex-1 grid grid-cols-5 p-2 gap-2 overflow-hidden">
                 {dashboardData.salesmen.map((salesman, index) => (
                     <SalesmanColumn
                         key={salesman.id}
@@ -66,7 +66,7 @@ export default function Dashboard() {
 
 function LoadingSkeleton() {
     return (
-        <div className="flex flex-col h-screen w-screen overflow-hidden bg-[#121212]">
+        <div className="flex flex-col h-screen w-full overflow-hidden bg-[#121212]">
             {/* Header skeleton */}
             <div className="px-6 py-5 border-b border-gray-800">
                 <div className="flex justify-between items-center">
@@ -83,7 +83,7 @@ function LoadingSkeleton() {
             </div>
 
             {/* Columns skeleton */}
-            <div className="flex-1 flex p-6 gap-5">
+            <div className="flex-1 grid grid-cols-5 p-2 gap-2 overflow-hidden">
                 {[1, 2, 3, 4, 5].map((i) => (
                     <div
                         key={i}

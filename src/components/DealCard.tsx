@@ -34,7 +34,7 @@ export default function DealCard({ deal }: DealCardProps) {
                 </div>
                 <div className="flex-1 min-w-0">
                     <p className="text-base font-semibold text-white leading-snug line-clamp-2">
-                        {deal.companyTitle || deal.title}
+                        {cleanTitle(deal.companyTitle || deal.title)}
                     </p>
                 </div>
             </div>
@@ -51,6 +51,31 @@ export default function DealCard({ deal }: DealCardProps) {
             </div>
         </div>
     );
+}
+
+function cleanTitle(title: string): string {
+    if (!title) return "";
+
+    // Lista de prefixos para remover
+    const prefixesToRemove = [
+        "Venda Direta Residencial",
+        "Lista de Projeto Residencial",
+        "Venda Direta Corporativo", // Ordem importa: mais específico antes
+        "Venda Direta",
+        "Decorativo Comercial",
+        "Lista de Projeto Comercial",
+        "Projeto Residencial"
+    ];
+
+    let cleaned = title;
+
+    for (const prefix of prefixesToRemove) {
+        // Remove o prefixo (case insensitive) e possíveis separadores como " - " ou " "
+        const regex = new RegExp(`^${prefix}\\s*(-)?\\s*`, 'i');
+        cleaned = cleaned.replace(regex, '');
+    }
+
+    return cleaned.trim();
 }
 
 function getTimeAgo(date: Date): string {
