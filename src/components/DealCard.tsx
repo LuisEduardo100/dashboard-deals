@@ -21,13 +21,7 @@ export default function DealCard({ deal }: DealCardProps) {
             className="deal-card bg-[#151515] rounded-xl border border-gray-800/50 hover:border-[#A9F804]/30 transition-all p-4 lg:p-2.5"
         >
             {/* Funnel Badge */}
-            {funnelName && (
-                <div className="mb-3 lg:mb-1.5">
-                    <span className="text-[10px] lg:text-[10px] font-medium text-[#A9F804] bg-[#A9F804]/10 px-2 py-1 rounded-md">
-                        {funnelName}
-                    </span>
-                </div>
-            )}
+
 
             {/* Nome da Empresa */}
             <div className="flex items-start gap-3 lg:gap-2 mb-3 lg:mb-1.5">
@@ -39,6 +33,11 @@ export default function DealCard({ deal }: DealCardProps) {
                         {cleanTitle(deal.companyTitle || deal.title)}
                     </p>
                 </div>
+                {funnelName && (
+                    <span className="flex-shrink-0 text-[10px] lg:text-[10px] font-medium text-[#A9F804] bg-[#A9F804]/10 px-1.5 py-0.5 rounded-md">
+                        {funnelName}
+                    </span>
+                )}
             </div>
 
             {/* Valor e Data */}
@@ -66,7 +65,10 @@ function cleanTitle(title: string): string {
         "Venda Direta",
         "Decorativo Comercial",
         "Lista de Projeto Comercial",
-        "Projeto Residencial"
+        "Projeto Residencial",
+        "Projeto Corporativo",
+        "Projeto Comercial",
+        "Projeto Residencial",
     ];
 
     let cleaned = title;
