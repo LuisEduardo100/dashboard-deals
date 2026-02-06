@@ -32,7 +32,7 @@ export default function SalesmanColumn({
             style={{ animationDelay: `${animationDelay}ms` }}
         >
             {/* Header do Vendedor */}
-            <div className="p-4 bg-gradient-to-r from-[#1E1E1E] to-[#252525] border-b border-gray-800">
+            <div className="p-3 lg:p-2 bg-gradient-to-r from-[#1E1E1E] to-[#252525] border-b border-gray-800">
                 <div className="flex items-center gap-4 mb-4">
                     {/* Photo - cleaner look without borders, neutral bg for transparent pngs */}
                     <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center overflow-hidden flex-shrink-0">
@@ -74,7 +74,7 @@ export default function SalesmanColumn({
             </div>
 
             {/* Cards de Negócios - padding e espaço entre cards */}
-            <div className="flex-1 overflow-y-auto scrollbar-hide p-3 space-y-3">
+            <div className="flex-1 overflow-y-auto scrollbar-hide p-2.5 lg:p-2 space-y-2 lg:space-y-1.5">
                 {sortedDeals.length === 0 ? (
                     <div className="flex items-center justify-center h-32 text-gray-500">
                         <p className="text-sm">Nenhum negócio</p>

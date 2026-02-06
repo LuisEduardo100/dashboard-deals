@@ -17,36 +17,38 @@ export default function DealCard({ deal }: DealCardProps) {
     const funnelName = funnel?.shortName || "";
 
     return (
-        <div className="deal-card bg-[#151515] rounded-xl p-6 border border-gray-800/50 hover:border-[#A9F804]/30 transition-all">
+        <div
+            className="deal-card bg-[#151515] rounded-xl border border-gray-800/50 hover:border-[#A9F804]/30 transition-all p-4 lg:p-2.5"
+        >
             {/* Funnel Badge */}
             {funnelName && (
-                <div className="mb-4">
-                    <span className="text-xs font-medium text-[#A9F804] bg-[#A9F804]/10 px-3 py-1.5 rounded-lg">
+                <div className="mb-3 lg:mb-1.5">
+                    <span className="text-[10px] lg:text-[10px] font-medium text-[#A9F804] bg-[#A9F804]/10 px-2 py-1 rounded-md">
                         {funnelName}
                     </span>
                 </div>
             )}
 
             {/* Nome da Empresa */}
-            <div className="flex items-start gap-4 mb-5">
-                <div className="w-11 h-11 rounded-xl bg-[#1E1E1E] flex items-center justify-center flex-shrink-0">
-                    <Briefcase className="w-5 h-5 text-gray-400" />
+            <div className="flex items-start gap-3 lg:gap-2 mb-3 lg:mb-1.5">
+                <div className="w-10 h-10 lg:w-8 lg:h-8 rounded-lg bg-[#1E1E1E] flex items-center justify-center flex-shrink-0">
+                    <Briefcase className="w-4 h-4 lg:w-3.5 lg:h-3.5 text-gray-400" />
                 </div>
                 <div className="flex-1 min-w-0">
-                    <p className="text-base font-semibold text-white leading-snug line-clamp-2">
+                    <p className="text-sm lg:text-[13px] font-semibold text-white leading-snug line-clamp-2">
                         {cleanTitle(deal.companyTitle || deal.title)}
                     </p>
                 </div>
             </div>
 
             {/* Valor e Data */}
-            <div className="flex items-center justify-between pt-4 border-t border-gray-800/50">
-                <span className="text-xl font-bold text-[#A9F804]">
+            <div className="flex items-center justify-between pt-3 lg:pt-1.5 border-t border-gray-800/50">
+                <span className="text-lg lg:text-base font-bold text-[#A9F804]">
                     {formatCurrency(deal.opportunity)}
                 </span>
-                <div className="flex items-center gap-2 text-gray-500">
-                    <Clock className="w-4 h-4" />
-                    <span className="text-sm">{timeAgo}</span>
+                <div className="flex items-center gap-1.5 text-gray-500">
+                    <Clock className="w-3.5 h-3.5 lg:w-3 lg:h-3" />
+                    <span className="text-xs lg:text-[11px]">{timeAgo}</span>
                 </div>
             </div>
         </div>

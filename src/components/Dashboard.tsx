@@ -51,7 +51,7 @@ export default function Dashboard() {
             />
 
             {/* Kanban por Vendedor - Grid fixo de 5 colunas para caber na TV 100% */}
-            <div className="flex-1 grid grid-cols-5 p-2 gap-2 overflow-hidden">
+            <div className="flex-1 grid grid-cols-5 p-2 lg:p-1 gap-2 lg:gap-1 overflow-hidden">
                 {dashboardData.salesmen.map((salesman, index) => (
                     <SalesmanColumn
                         key={salesman.id}
