@@ -71,7 +71,7 @@ export default function TotalsHeader({
                     <div className="flex items-center gap-2 px-4 py-2 bg-[#A9F804]/10 rounded-lg border-2 border-[#A9F804]/30">
                         <div>
                             <p className="text-xs text-[#A9F804] uppercase tracking-wider font-semibold">
-                                Total Geral
+                                Forecast Geral
                             </p>
                             <p className="text-xl font-black text-[#A9F804] glow-accent">
                                 {formatCurrency(grandTotal)}

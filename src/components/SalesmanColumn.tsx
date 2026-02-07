@@ -70,7 +70,7 @@ export default function SalesmanColumn({
                 <div className="flex items-center justify-between px-2 py-2 bg-[#121212] rounded-lg gap-2">
                     {/* Total Geral */}
                     <div className="flex flex-col items-center flex-1">
-                        <span className="text-[10px] text-gray-500 font-medium">Total</span>
+                        <span className="text-[10px] text-gray-500 font-medium">Forecast</span>
                         <span className="text-sm font-bold text-[#A9F804] glow-accent">
                             {formatCurrency(salesman.grandTotal)}
                         </span>
