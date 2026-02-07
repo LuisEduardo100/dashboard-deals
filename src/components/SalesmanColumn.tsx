@@ -65,11 +65,42 @@ export default function SalesmanColumn({
                 </div>
 
                 {/* Total do Vendedor */}
-                <div className="flex items-center justify-between px-3 py-2 bg-[#121212] rounded-lg">
-                    <span className="text-sm text-gray-400 font-medium">Total</span>
-                    <span className="text-xl font-bold text-[#A9F804] glow-accent">
-                        {formatCurrency(salesman.grandTotal)}
-                    </span>
+                {/* Métricas do Vendedor */}
+                {/* Métricas do Vendedor */}
+                <div className="flex items-center justify-between px-2 py-2 bg-[#121212] rounded-lg gap-2">
+                    {/* Total Geral */}
+                    <div className="flex flex-col items-center flex-1">
+                        <span className="text-[10px] text-gray-500 font-medium">Total</span>
+                        <span className="text-sm font-bold text-[#A9F804] glow-accent">
+                            {formatCurrency(salesman.grandTotal)}
+                        </span>
+                    </div>
+
+                    {/* Divisor */}
+                    <div className="w-[1px] h-6 bg-gray-800" />
+
+                    {/* Ganho */}
+                    <div className="flex flex-col items-center flex-1">
+                        <span className="text-[10px] text-[#A9F804] font-medium whitespace-nowrap">
+                            Ganho ({salesman.wonCount})
+                        </span>
+                        <span className="text-sm font-bold text-[#A9F804]">
+                            {formatCurrency(salesman.wonValue)}
+                        </span>
+                    </div>
+
+                    {/* Divisor */}
+                    <div className="w-[1px] h-6 bg-gray-800" />
+
+                    {/* Perdido */}
+                    <div className="flex flex-col items-center flex-1">
+                        <span className="text-[10px] text-red-900 font-medium whitespace-nowrap">
+                            Perdido ({salesman.lostCount})
+                        </span>
+                        <span className="text-sm font-bold text-red-900">
+                            {formatCurrency(salesman.lostValue)}
+                        </span>
+                    </div>
                 </div>
             </div>
 

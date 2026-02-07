@@ -57,7 +57,7 @@ async function fetchDealsFromStage(stageId: string): Promise<BitrixDeal[]> {
             });
 
             // Add select fields
-            ["TITLE", "OPPORTUNITY", "ASSIGNED_BY_ID", "STAGE_ID", "COMPANY_TITLE", "DATE_MODIFY"].forEach(
+            ["TITLE", "OPPORTUNITY", "ASSIGNED_BY_ID", "STAGE_ID", "COMPANY_TITLE", "DATE_MODIFY", "CLOSEDATE"].forEach(
                 (field) => params.append("select[]", field)
             );
 
@@ -101,6 +101,7 @@ function transformDeal(bitrixDeal: BitrixDeal): Deal {
         assignedById: parseInt(bitrixDeal.ASSIGNED_BY_ID),
         stageId: bitrixDeal.STAGE_ID,
         companyTitle: bitrixDeal.COMPANY_TITLE || bitrixDeal.TITLE || "Sem empresa",
+        closeDate: bitrixDeal.CLOSEDATE ? new Date(bitrixDeal.CLOSEDATE) : undefined,
         lastUpdated: bitrixDeal.DATE_MODIFY
             ? new Date(bitrixDeal.DATE_MODIFY)
             : new Date(),
@@ -123,6 +124,70 @@ export async function fetchAllDeals(): Promise<Deal[]> {
     results.forEach((deals) => allDeals.push(...deals));
 
     return allDeals;
+}
+
+/**
+ * Fetch closed deals (Won/Lost) for a specific date range
+ */
+export async function fetchClosedDeals(startDate: Date, endDate: Date): Promise<Deal[]> {
+    const allDeals: BitrixDeal[] = [];
+
+    // Format dates for Bitrix filter (YYYY-MM-DD)
+    const startStr = startDate.toISOString();
+    const endStr = endDate.toISOString();
+
+    const promises = FUNNELS.map(async (funnel) => {
+        let start = 0;
+        const funnelDeals: BitrixDeal[] = [];
+
+        while (true) {
+            const response = await retryWithBackoff(async () => {
+                const url = `${BITRIX_WEBHOOK_URL}crm.deal.list.json`;
+                const params = new URLSearchParams({
+                    "filter[CATEGORY_ID]": funnel.id,
+                    "filter[CLOSED]": "Y",
+                    "filter[>CLOSEDATE]": startStr,
+                    "filter[<CLOSEDATE]": endStr,
+                    "select[]": "ID",
+                    start: start.toString(),
+                });
+
+                // Add select fields
+                ["TITLE", "OPPORTUNITY", "ASSIGNED_BY_ID", "STAGE_ID", "COMPANY_TITLE", "DATE_MODIFY", "CLOSEDATE"].forEach(
+                    (field) => params.append("select[]", field)
+                );
+
+                // Add salesman filter
+                SALESMAN_IDS.forEach((id) =>
+                    params.append("filter[ASSIGNED_BY_ID][]", id.toString())
+                );
+
+                const res = await fetch(`${url}?${params.toString()}`, {
+                    cache: "no-store",
+                });
+
+                if (!res.ok) {
+                    throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+                }
+
+                return res.json() as Promise<BitrixListResponse>;
+            });
+
+            funnelDeals.push(...response.result);
+
+            if (response.next) {
+                start = response.next;
+            } else {
+                break;
+            }
+        }
+        return funnelDeals;
+    });
+
+    const results = await Promise.all(promises);
+    results.forEach((deals) => allDeals.push(...deals));
+
+    return allDeals.map(transformDeal);
 }
 
 /**

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { fetchAllDeals } from "@/lib/bitrix";
+import { fetchAllDeals, fetchClosedDeals } from "@/lib/bitrix";
 import {
     DashboardData,
     Salesman,
@@ -20,8 +20,14 @@ export async function GET() {
         // Fetch directly from Bitrix24
         const deals = await fetchAllDeals();
 
+        // Fetch closed deals for the current month
+        const now = new Date();
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+        const closedDeals = await fetchClosedDeals(startOfMonth, endOfMonth);
+
         // Organize data by salesman
-        const dashboardData = organizeDashboardData(deals);
+        const dashboardData = organizeDashboardData(deals, closedDeals);
 
         return NextResponse.json({
             success: true,
@@ -44,9 +50,10 @@ export async function GET() {
 /**
  * Organize deals into dashboard display structure
  */
-function organizeDashboardData(deals: Deal[]): DashboardData {
+function organizeDashboardData(deals: Deal[], closedDeals: Deal[]): DashboardData {
     const salesmen: Salesman[] = SALESMEN_CONFIG.map((config) => {
         const salesmanDeals = deals.filter((d) => d.assignedById === config.id);
+        const salesmanClosedDeals = closedDeals.filter((d) => d.assignedById === config.id);
 
         // Calculate totals by funnel
         const totalByFunnel: { [key: string]: number } = {};
@@ -65,12 +72,26 @@ function organizeDashboardData(deals: Deal[]): DashboardData {
             0
         );
 
+        // Calculate Won/Lost metrics
+        const wonDeals = salesmanClosedDeals.filter((d) => d.stageId.includes("WON"));
+        const lostDeals = salesmanClosedDeals.filter((d) => d.stageId.includes("LOSE"));
+
+        const wonCount = wonDeals.length;
+        const wonValue = wonDeals.reduce((sum, d) => sum + d.opportunity, 0);
+
+        const lostCount = lostDeals.length;
+        const lostValue = lostDeals.reduce((sum, d) => sum + d.opportunity, 0);
+
         return {
             id: config.id,
             name: config.name,
             deals: salesmanDeals,
             totalByFunnel,
             grandTotal,
+            wonCount,
+            lostCount,
+            wonValue,
+            lostValue,
         };
     });
 

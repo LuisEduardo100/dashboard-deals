@@ -8,6 +8,7 @@ export interface BitrixDeal {
   STAGE_ID: string;
   COMPANY_TITLE?: string;
   DATE_MODIFY?: string;
+  CLOSEDATE?: string;
 }
 
 export interface Deal {
@@ -18,6 +19,7 @@ export interface Deal {
   stageId: string;
   companyTitle: string;
   lastUpdated: Date;
+  closeDate?: Date;
 }
 
 export interface Salesman {
@@ -28,6 +30,10 @@ export interface Salesman {
     [key: string]: number;
   };
   grandTotal: number;
+  wonCount: number;
+  lostCount: number;
+  wonValue: number;
+  lostValue: number;
 }
 
 export interface FunnelConfig {
