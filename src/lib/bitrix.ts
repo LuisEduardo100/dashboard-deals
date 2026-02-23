@@ -61,10 +61,13 @@ async function fetchDealsFromStage(stageId: string): Promise<BitrixDeal[]> {
                 (field) => params.append("select[]", field)
             );
 
-            // Add salesman filter
-            SALESMAN_IDS.forEach((id) =>
-                params.append("filter[ASSIGNED_BY_ID][]", id.toString())
-            );
+            // Add salesman filter only if it's not the Corporativo funnel
+            // For Corporativo (Formalização) we want to fetch all deals to calculate the total correctly
+            if (stageId !== "C304:FINAL_INVOICE") {
+                SALESMAN_IDS.forEach((id) =>
+                    params.append("filter[ASSIGNED_BY_ID][]", id.toString())
+                );
+            }
 
             const res = await fetch(`${url}?${params.toString()}`, {
                 cache: "no-store",

@@ -75,10 +75,10 @@ export const FUNNELS: FunnelConfig[] = [
     shortName: "SMB",
   },
   {
-    id: "306",
-    stageId: "C306:UC_GZ70P4",
-    name: "Barão (Fechamento Semana)",
-    shortName: "Barão",
+    id: "304",
+    stageId: "C304:FINAL_INVOICE",
+    name: "Corporativo (Formalização)",
+    shortName: "Corporativo",
   },
 ];
 

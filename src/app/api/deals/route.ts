@@ -95,13 +95,13 @@ function organizeDashboardData(deals: Deal[], closedDeals: Deal[]): DashboardDat
         };
     });
 
-    // Calculate overall funnel totals
+    // Calculate overall funnel totals using all fetched deals
+    // This ensures deals not assigned to specific salesmen (e.g., Corporativo deals) are included
     const funnelTotals: { [key: string]: number } = {};
     FUNNELS.forEach((funnel) => {
-        funnelTotals[funnel.stageId] = salesmen.reduce(
-            (sum, s) => sum + (s.totalByFunnel[funnel.stageId] || 0),
-            0
-        );
+        funnelTotals[funnel.stageId] = deals
+            .filter((d) => d.stageId === funnel.stageId)
+            .reduce((sum, d) => sum + d.opportunity, 0);
     });
 
     const grandTotal = Object.values(funnelTotals).reduce(
