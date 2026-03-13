@@ -85,7 +85,6 @@ export const FUNNELS: FunnelConfig[] = [
 export const SALESMEN_CONFIG: { id: number; name: string; photo: string }[] = [
   { id: 52, name: "Yuri Queiroz", photo: "/salesman_photos/yuri.png" },
   { id: 190, name: "Mateus Martins", photo: "/salesman_photos/matheus_martins.png" },
-  { id: 70, name: "Raquel Freitas", photo: "/salesman_photos/raquel.png" },
   { id: 364, name: "Paulo César", photo: "/salesman_photos/paulo_cesar.png" },
   { id: 286, name: "Victor Jorge", photo: "/salesman_photos/victor.png" },
 ];

@@ -50,8 +50,8 @@ export default function Dashboard() {
                 fromCache={data?.fromCache || false}
             />
 
-            {/* Kanban por Vendedor - Grid fixo de 5 colunas para caber na TV 100% */}
-            <div className="flex-1 grid grid-cols-5 p-2 lg:p-1 gap-2 lg:gap-1 overflow-hidden">
+            {/* Kanban por Vendedor - Grid adaptável centralizado */}
+            <div className="flex-1 grid grid-cols-4 p-2 lg:p-1 gap-3 lg:gap-2 overflow-hidden max-w-[1920px] mx-auto w-full">
                 {dashboardData.salesmen.map((salesman, index) => (
                     <SalesmanColumn
                         key={salesman.id}
@@ -83,8 +83,8 @@ function LoadingSkeleton() {
             </div>
 
             {/* Columns skeleton */}
-            <div className="flex-1 grid grid-cols-5 p-2 gap-2 overflow-hidden">
-                {[1, 2, 3, 4, 5].map((i) => (
+            <div className="flex-1 grid grid-cols-4 p-2 gap-3 overflow-hidden max-w-[1920px] mx-auto w-full">
+                {[1, 2, 3, 4].map((i) => (
                     <div
                         key={i}
                         className="flex-1 bg-[#1E1E1E] rounded-xl p-5"
