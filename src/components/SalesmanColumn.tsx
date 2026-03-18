@@ -42,7 +42,7 @@ export default function SalesmanColumn({
                                 alt={salesman.name}
                                 width={64}
                                 height={64}
-                                className="w-full h-full object-contain transition-transform"
+                                className="w-full h-full object-cover transition-transform"
                                 style={{
                                     objectPosition: "center top",
                                     transform: salesman.id === 286 ? "scale(1.05) translateY(7px)" : "none",
