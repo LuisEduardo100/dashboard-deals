@@ -95,6 +95,7 @@ export const SALESMEN_CONFIG: { id: number; name: string; photo: string }[] = [
   { id: 286, name: "Victor Jorge", photo: "/salesman_photos/victor.png" },
   { id: 2258, name: "Aderúcia Pereira", photo: "/salesman_photos/aderucia_pereira.png" },
   { id: 100, name: "Renato Campos", photo: "/salesman_photos/renato_campos.png" },
+  { id: 2894, name: "Suênia Andrade", photo: "/salesman_photos/suenia.png" },
 ];
 
 export const SALESMAN_IDS = SALESMEN_CONFIG.map((s) => s.id);
